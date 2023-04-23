@@ -8,6 +8,9 @@ from flask import Flask, render_template
 app = Flask(__name__, template_folder='templates') # Creates an instance of the Flask class
 
 
+TEMPLATE_NAME = '5-number.html'
+
+
 @app.route("/", strict_slashes=False) # Defines the root route and disables strict slashes
 def hello_hbnb():
     """Displays 'Hello HBNB!'"""
@@ -42,7 +45,7 @@ def number(n):
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template(n):
     """Display a HTML page only if n is an integer"""
-    return render_template('5-number.html', n=n)
+    return render_template(TEMPLATE_NAME, n=n)
 
 
 if __name__ == "__main__":

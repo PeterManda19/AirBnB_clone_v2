@@ -1,0 +1,17 @@
+/* Add some style to the header */
+h1 {
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: 32px;
+    text-align: center;
+    margin-top: 20px;
+}
+  
+/* Add some style to the body */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    margin: 20px;
+}
+  

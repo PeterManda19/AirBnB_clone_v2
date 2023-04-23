@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>HBNB</title>
+        <title>HBNB Number Template</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
     </head>
     <body>
+        <!-- Display the number passed in the URL as a heading -->
         <h1>Number: {{ n }}</h1>
     </body>
 </html>
