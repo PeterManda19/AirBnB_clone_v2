@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """DB storage"""
 
+
 from models.base_model import BaseModel, Base
 from models.user import User
 from models.state import State
@@ -72,11 +73,11 @@ class DBStorage:
         self.__session = Session()
 
     def close(self):
-        """call close"""
-        self.__session.close()
+        """close session"""
+        self.__session.remove()
 
     def reset(self):
-        """Reset"""
+        """reset"""
         self.__session.close()
         Base.metadata.drop_all(self.__engine)
         self.reload()
