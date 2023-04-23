@@ -4,12 +4,29 @@
 from flask import Flask, render_template
 from models import storage
 from models.state import State
+import subprocess
 
 
 app = Flask(__name__)
 
 # Create all tables before running the Flask app
 storage.reload()
+
+
+# Define the database credentials
+db_user = "root"
+db_password = ""
+db_name = "hbnb_dev_db"
+
+# Define the path to the dump file
+dump_file = "/path/to/7-dump.sql"
+
+# Run the mysql command to import the dump file
+subprocess.run(
+    f"mysql -u {db_user} -p{db_password} {db_name} < {dump_file}",
+    shell=True,
+    check=True
+)
 
 
 @app.teardown_appcontext
