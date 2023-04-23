@@ -3,9 +3,9 @@
 Flask web application that listens on 0.0.0.0, port 5000
 """
 
-from flask import Flask
+from flask import Flask, render_template
 
-app = Flask(__name__) # Creates an instance of the Flask class
+app = Flask(__name__, template_folder='templates') # Creates an instance of the Flask class
 
 
 @app.route("/", strict_slashes=False) # Defines the root route and disables strict slashes
