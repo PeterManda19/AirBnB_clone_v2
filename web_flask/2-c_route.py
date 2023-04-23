@@ -1,34 +1,60 @@
 #!/usr/bin/python3
-"""Flask framework"""
+"""
+Flask web application that serves simple routes
+"""
 
-from flask import Flask, render_template
+import os
+from flask import Flask, abort, render_template
+
+# Create a new Flask application instance
 app = Flask(__name__)
 
-# define a route for the root URL path '/'
-# and set strict_slashes=False to allow for URLs with or without a trailing slash
+# Define the routes
+
 @app.route('/', strict_slashes=False)
 def hello():
-    """display Hello HBNB!"""
+    """
+    Displays "Hello HBNB!" on the root URL path '/'
+    """
     return 'Hello HBNB!'
 
-
-# define a route for '/hbnb' URL path
-# and set strict_slashes=False to allow for URLs with or without a trailing slash
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    """display HBNB"""
+    """
+    Displays "HBNB" on the '/hbnb' URL path
+    """
     return 'HBNB'
 
-
-# define a route for '/c/<text>' URL path
-# where <text> is a variable that can be any string
-# and set strict_slashes=False to allow for URLs with or without a trailing slash
 @app.route('/c/<text>', strict_slashes=False)
-def c(text):
-    """display C followed by the text"""
+def c_is_fun(text):
+    """
+    Displays "C <text>" on the '/c/<text>' URL path, with underscores
+    replaced by spaces
+    """
     return 'C {}'.format(text.replace('_', ' '))
 
-# start the Flask application, listening on host '0.0.0.0' and port 5000
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+# Handle 404 errors with a custom error page
+@app.errorhandler(404)
+def page_not_found(error):
+    """
+    Renders a custom 404 error page
+    """
+    return render_template('404.html'), 404
 
+if __name__ == '__main__':
+    # Use environment variables to set Flask app configuration
+    app.config['DEBUG'] = os.getenv('FLASK_DEBUG', False)
+    app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'dev')
+
+    # Use a separate file for Flask app configuration
+    app.config.from_pyfile('config.cfg', silent=True)
+
+    # Use a logging library to log application activity
+    import logging
+    from logging.handlers import RotatingFileHandler
+    handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=1)
+    handler.setLevel(logging.INFO)
+    app.logger.addHandler(handler)
+
+    # Start the Flask application, listening on host '0.0.0.0' and port 5000
+    app.run(host='0.0.0.0', port=5000)
